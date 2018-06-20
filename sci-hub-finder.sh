@@ -19,7 +19,7 @@ echo "$(cat $dns_res | wc -l) candidates found"
 
 echo "visiting pages"
 temp_result=$(tempfile)
-cat $dns_res | xargs -n 1 -i bash -c "curl -s 'https://{}' | grep -c 'will always redirect to the working Sci-Hub domain\|The first pirate website in the world to open mass and public access to tens of millions research papers' | xargs -n 1 echo {}" | grep -v " 0$" > $temp_result
+cat $dns_res | xargs -n 1 -i bash -c "curl -s 'https://{}' | grep -c 'will always redirect to the working Sci-Hub domain\|The first pirate website in the world to open mass and public access to tens of millions research papers' | xargs -n 1 echo {}" | grep -v " 0$" | cut -d' ' -f 1 > $temp_result
 
 echo "$(cat $temp_result | wc -l) urls found"
 
