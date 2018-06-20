@@ -13,7 +13,7 @@ echo "$(cat $temp | wc -l) TLD to check"
 dns_res=$(tempfile)
 
 echo "checking DNS"
-cat $temp | grep -v "^#" | xargs -n 1 -i echo "sci-hub.{}" | xargs -n 1 -i bash -c "nslookup {} | | grep -A10 'Non-authoritative answer' | grep -c 'Address:' | xargs echo {} " | grep -v " 0$" | cut -d' ' -f 1 > $dns_res
+cat $temp | grep -v "^#" | xargs -n 1 -i echo "sci-hub.{}" | xargs -n 1 -i bash -c "nslookup {} | grep -A10 'Non-authoritative answer' | grep -c 'Address:' | xargs echo {} " | grep -v " 0$" | cut -d' ' -f 1 > $dns_res
 
 echo "$(cat $dns_res | wc -l) candidates found ($dns_res)"
 
