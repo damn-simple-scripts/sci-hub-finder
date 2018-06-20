@@ -8,7 +8,7 @@ target_file="/var/www/html/sci-hub.txt"
 
 temp=$(tempfile)
 curl -s "$list_tld" > $temp
-
+echo "$(cat $temp | wc -l) TLD to check"
 
 dns_res=$(tempfile)
 
