@@ -4,6 +4,7 @@
 
 list_tld="https://data.iana.org/TLD/tlds-alpha-by-domain.txt"
 target_file="/var/www/html/sci-hub.txt"
+target_file_html="/var/www/html/sci-hub.html"
 
 
 temp=$(tempfile)
@@ -23,6 +24,6 @@ cat $dns_res | xargs -n 1 -i bash -c "curl -m 5 -L -k -s 'https://{}' | grep -c 
 
 echo "$(cat $temp_result | wc -l) urls found"
 
-cat $temp_result | tee $target_file
+cat $temp_result | tee $target_file | sed -r 's/^(.*)$/- [\1](https:\/\/\1)/g' | pandoc -f markdown -t html --standalone > $target_file_html
 
 rm $temp_result $dns_res $temp
