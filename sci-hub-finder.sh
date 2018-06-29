@@ -40,6 +40,6 @@ cat $dns_res | xargs -n 1 -i bash -c "curl -m 5 -L -k -s 'https://{}' | grep -c 
 
 echo "$(cat $temp_result | wc -l) urls found"
 
-cat $temp_result | tee $target_file | sed -r 's/^(.*)$/- [\1](https:\/\/\1)/g' | pandoc -f markdown -t html --standalone > $target_file_html
+cat $temp_result | tee $target_file | sed -r 's/^(.*)$/- [\1](https:\/\/\1)/g' | cat <( date | xargs -i echo -e 'Last update:' {} '\n' ) - | pandoc -f markdown -t html --standalone > $target_file_html
 
 rm $temp_result $dns_res $temp
