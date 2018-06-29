@@ -1,10 +1,26 @@
 #!/bin/bash
 
-# dependency: curl
+# dependency: curl, pandoc
 
 list_tld="https://data.iana.org/TLD/tlds-alpha-by-domain.txt"
 target_file="/var/www/html/sci-hub.txt"
 target_file_html="/var/www/html/sci-hub.html"
+
+
+#see https://stackoverflow.com/a/22592801/4148878
+if [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+  apt-get install curl
+else
+  echo "curl installed"
+fi
+
+if [ $(dpkg-query -W -f='${Status}' pandoc 2>/dev/null | grep -c "ok installed") -eq 0 ];
+then
+  apt-get install pandoc
+else
+  echo "pandoc installed"
+fi
 
 
 temp=$(tempfile)
