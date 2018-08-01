@@ -24,8 +24,16 @@ fi
 
 
 temp=$(tempfile)
-curl -s "$list_tld" > $temp
-echo "$(cat $temp | wc -l) TLD to check"
+while : ; do
+	curl -s "$list_tld" > $temp
+	echo "$(cat $temp | wc -l) TLD to check"
+	if [ $(cat $temp | wc -l) -gt 0 ]; then
+		break
+	else
+		sleep 60
+	fi
+done
+
 
 dns_res=$(tempfile)
 
